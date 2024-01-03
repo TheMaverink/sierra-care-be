@@ -21,8 +21,8 @@ const patientSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    patientImage: {
-      type: String,
+    patientImages: {
+      type: [String],
       required: false,
     },
     dob: {
@@ -69,7 +69,7 @@ const patientSchema = new mongoose.Schema(
       },
     },
     income: {
-      type: Number,
+      type: String,
     },
     job: {
       type: String,
@@ -79,24 +79,31 @@ const patientSchema = new mongoose.Schema(
     },
     appointments: {},
     logs: {},
-    //for later...
-    email: {
+    jotformFormId: {
       type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
+    },
+    patientCreatedAt: {},
+    ownsMobilePhone: {
+      type: String,
     },
     mobilePhone: {
       type: String,
     },
-    isEmailVerified: {
-      type: Boolean,
-      default: false,
-    },
+
+    //for later...
+    // email: {
+    //   type: String,
+    //   unique: false,
+    //   trim: true,
+    //   lowercase: true,
+    // },
+    // isEmailVerified: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+
     password: {
       type: String,
-      required: true,
     },
     resetPasswordCode: {
       type: String,
@@ -106,7 +113,6 @@ const patientSchema = new mongoose.Schema(
       {
         token: {
           type: String,
-          required: true,
         },
       },
     ],
@@ -119,9 +125,9 @@ const patientSchema = new mongoose.Schema(
 //   return signedUrl;
 // });
 
-patientSchema.virtual("doesHaveProfileImage").get(function () {
-  return !!this.profileImage;
-});
+// patientSchema.virtual("doesHaveProfileImage").get(function () {
+//   return !!this.profileImage;
+// });
 
 patientSchema.methods.getPatient = function () {
   const patient = this;

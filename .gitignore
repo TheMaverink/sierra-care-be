@@ -33,7 +33,6 @@ public/js/lib/popper.min*
 
 # Dependency directory
 node_modules
-bower_components
 
 # Editors
 .idea
