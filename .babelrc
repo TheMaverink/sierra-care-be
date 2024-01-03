@@ -1,0 +1,26 @@
+{
+  "presets": ["@babel/preset-env"],
+  "env": {
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
+  },
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "@routes": "./src/routes",
+          "@controllers": "./src/controllers",
+          "@models": "./src/models"
+          // "@utils": "./src/utils",
+          // "@config": "./src/config",
+          // "@middlewares": "./src/middlewares",
+          // "@consts": "./src/consts",
+          // "@resources": "./src/resources"
+        }
+      }
+    ]
+  ]
+}
