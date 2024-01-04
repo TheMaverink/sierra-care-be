@@ -1,8 +1,8 @@
-import getAllPatients from "./getAllPatients";
+import getPatients from "./getPatients";
 import getPatientById from "./getPatientById"
 
 const patientsControllers = {
-  getAllPatients,
+  getPatients,
   getPatientById
 };
 

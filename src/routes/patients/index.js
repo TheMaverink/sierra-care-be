@@ -3,9 +3,9 @@ import patientsControllers from "@controllers/Patients";
 
 const router = Router();
 
-const { getAllPatients ,getPatientById} = patientsControllers;
+const { getPatients ,getPatientById} = patientsControllers;
 
-router.get("/all", getAllPatients);
+router.get("/", getPatients);
 router.get("/:id", getPatientById);
 
 export default router;
