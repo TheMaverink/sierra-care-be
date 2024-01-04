@@ -132,7 +132,7 @@ const addPatientsFromJotform = async (req, res, next) => {
             break;
 
           case "gender":
-            patientData.sex = currentAnswer?.answer;
+            patientData.gender = currentAnswer?.answer;
 
             break;
 

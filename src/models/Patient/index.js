@@ -1,9 +1,11 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 // import mongooseLeanGetters from "mongoose-lean-getters";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 // import { getObjectSignedUrl } from "utils/s3";
+
+import {GENDERS,PATIENTS_ENGLISH_SPEAKING_LEVELS,PATIENTS_MARITAL_STATUS} from "@consts"
 
 dotenv.config({ path: ".env" });
 
@@ -28,13 +30,15 @@ const patientSchema = new mongoose.Schema(
     dob: {
       type: Date,
     },
-    sex: {
-      type: String,
-      required: true,
-      default: "unknown",
+    gender: {
+      type: Number,
+      enum: Object.values(GENDERS),
+      default: GENDERS.UNKNOWN
     },
     englishSpeakingLevel: {
       type: Number,
+      enum: Object.values(PATIENTS_ENGLISH_SPEAKING_LEVELS),
+      default: PATIENTS_ENGLISH_SPEAKING_LEVELS.UNKNOWN
     },
     height: {},
     healthRisk: {},
@@ -75,7 +79,9 @@ const patientSchema = new mongoose.Schema(
       type: String,
     },
     maritalStatus: {
-      type: String,
+      type: Number,
+      enum: Object.values(PATIENTS_MARITAL_STATUS),
+      default: PATIENTS_MARITAL_STATUS.UNKNOWN
     },
     appointments: {},
     logs: {},
@@ -88,34 +94,7 @@ const patientSchema = new mongoose.Schema(
     },
     mobilePhone: {
       type: String,
-    },
-
-    //for later...
-    // email: {
-    //   type: String,
-    //   unique: false,
-    //   trim: true,
-    //   lowercase: true,
-    // },
-    // isEmailVerified: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-
-    password: {
-      type: String,
-    },
-    resetPasswordCode: {
-      type: String,
-      trim: true,
-    },
-    tokens: [
-      {
-        token: {
-          type: String,
-        },
-      },
-    ],
+    }
   },
   { timestamps: true }
 );
@@ -136,29 +115,6 @@ patientSchema.methods.getPatient = function () {
   delete patientObj.tokens;
   return patientObj;
 };
-
-//for later..
-
-patientSchema.methods.generateJwtToken = async function () {
-  const patient = this;
-  const token = jwt.sign(
-    { _id: patient.id.toString() },
-    process.env.JWT_SECRET
-  );
-
-  patient.tokens = user.patient.concat({ token });
-  await patient.save();
-  return token;
-};
-
-patientSchema.pre("save", async function (next) {
-  if (this.isModified("password")) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
-
-  next();
-});
 
 const Patient = mongoose.model("Patient", patientSchema);
 

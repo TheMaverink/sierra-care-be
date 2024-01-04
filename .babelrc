@@ -14,11 +14,11 @@
         "alias": {
           "@routes": "./src/routes",
           "@controllers": "./src/controllers",
-          "@models": "./src/models"
+          "@models": "./src/models",
+          "@consts": "./src/consts",
           // "@utils": "./src/utils",
           // "@config": "./src/config",
           // "@middlewares": "./src/middlewares",
-          // "@consts": "./src/consts",
           // "@resources": "./src/resources"
         }
       }

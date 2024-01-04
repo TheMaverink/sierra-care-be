@@ -1,11 +1,11 @@
 import Patient from "./Patient";
-import Staff from "./Staff";
+import Volunteer from "./Volunteer";
 import Clinic from "./Clinic";
 import Donor from "./Donor";
 
 const models = {
   Patient,
-  Staff,
+  Volunteer,
   Clinic,
   Donor,
   //Patient Log/Entry?
