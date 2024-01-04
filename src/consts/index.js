@@ -1,27 +1,27 @@
 export const GENDERS = {
-  UNKNOWN: -1,
-  MALE: 0,
-  FEMALE: 1,
+  UNKNOWN: "unknown",
+  MALE: "male",
+  FEMALE: "female",
 };
 
 export const PATIENTS_ENGLISH_SPEAKING_LEVELS = {
-  UNKNOWN: -1,
-  NONE: 0,
-  BEGINNER: 1,
-  ELEMENTARY: 2,
-  INTERMEDIATE: 3,
-  ADVANCED: 4,
+  UNKNOWN: "unknown",
+  NONE: "none",
+  BEGINNER: "beginner",
+  ELEMENTARY: "elementary",
+  INTERMEDIATE: "intermediate",
+  ADVANCED: "advanced",
 };
 
 export const PATIENTS_MARITAL_STATUS = {
-  UNKNOWN: -1,
-  SINGLE: 0,
-  MARRIED: 1,
-  WIDOWED: 2,
-  DIVORCED: 3,
+  UNKNOWN: "unknown",
+  SINGLE: "single",
+  MARRIED: "married",
+  WIDOWED: "widowed",
+  DIVORCED: "divorced",
 };
 
 export const VOLUNTEER_ROLES = {
-  NORMAL: 0,
-  ADMIN: 1,
+  NORMAL: "normal",
+  ADMIN: "admin",
 };

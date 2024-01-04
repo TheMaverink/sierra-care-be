@@ -51,19 +51,16 @@ const volunteerSchema = new mongoose.Schema(
       type: Date,
     },
     gender: {
-      type: Number,
+      type: String,
       enum: Object.values(GENDERS),
       default: GENDERS.UNKNOWN,
     },
-    location: {
-      postcode: {
-        type: String,
-      },
+    address: {
       formattedAddress: {
         type: String,
       },
     },
-    geometry: {
+    locationCoordinates: {
       type: {
         type: String,
         default: "Point",
@@ -77,17 +74,18 @@ const volunteerSchema = new mongoose.Schema(
       type: String,
     },
     role: {
-      type: Number,
+      type: String,
       enum: Object.values(VOLUNTEER_ROLES),
       default: VOLUNTEER_ROLES.NORMAL,
     },
     appointments: {},
     logs: {},
-    volunteerCreatedAt: {},
-    isExternal: {  //maybe replace with diff role level?
+    isExternal: {
+      //maybe replace with diff role level?
       type: Boolean,
     },
-    worksAt: {// link to other schema?
+    worksAt: {
+      // link to other schema?
       type: String,
     },
     tokens: [
@@ -133,12 +131,13 @@ volunteerSchema.methods.generateJwtToken = async function () {
 volunteerSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     const salt = await bcrypt.genSalt(10);
-    this.password = bcrypt.hash(this.password, salt);
+
+    this.password = await bcrypt.hash(this.password, salt);
   }
 
   next();
 });
 
-const Patient = mongoose.model("Patient", volunteerSchema);
+const Volunteer = mongoose.model("Volunteer", volunteerSchema);
 
-export default Patient;
+export default Volunteer;

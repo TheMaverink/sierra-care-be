@@ -18,7 +18,6 @@
           "@consts": "./src/consts",
           // "@utils": "./src/utils",
           // "@config": "./src/config",
-          // "@middlewares": "./src/middlewares",
           // "@resources": "./src/resources"
         }
       }

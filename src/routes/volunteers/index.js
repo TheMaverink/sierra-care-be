@@ -5,6 +5,6 @@ const router = Router();
 
 const { createVolunteer } = volunteersControllers;
 
-router.get("/create", createVolunteer);
+router.post("/create", createVolunteer);
 
 export default router;

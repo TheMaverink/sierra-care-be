@@ -94,7 +94,7 @@ const addPatientsFromJotform = async (req, res, next) => {
             break;
 
           case "typeA":
-            patientData.geometry = {};
+            patientData.locationCoordinates = {};
 
             const latitudeRegex = /Latitude: ([\d.-]+)/;
             const longitudeRegex = /Longitude: ([\d.-]+)/;
@@ -106,7 +106,7 @@ const addPatientsFromJotform = async (req, res, next) => {
               const latitude = parseFloat(latitudeMatch[1]);
               const longitude = parseFloat(longitudeMatch[1]);
 
-              patientData.geometry.coordinates = [longitude, latitude];
+              patientData.locationCoordinates.coordinates = [longitude, latitude];
             }
 
             break;

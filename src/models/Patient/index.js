@@ -5,7 +5,11 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 // import { getObjectSignedUrl } from "utils/s3";
 
-import {GENDERS,PATIENTS_ENGLISH_SPEAKING_LEVELS,PATIENTS_MARITAL_STATUS} from "@consts"
+import {
+  GENDERS,
+  PATIENTS_ENGLISH_SPEAKING_LEVELS,
+  PATIENTS_MARITAL_STATUS,
+} from "@consts";
 
 dotenv.config({ path: ".env" });
 
@@ -33,12 +37,12 @@ const patientSchema = new mongoose.Schema(
     gender: {
       type: Number,
       enum: Object.values(GENDERS),
-      default: GENDERS.UNKNOWN
+      default: GENDERS.UNKNOWN,
     },
     englishSpeakingLevel: {
-      type: Number,
+      type: String,
       enum: Object.values(PATIENTS_ENGLISH_SPEAKING_LEVELS),
-      default: PATIENTS_ENGLISH_SPEAKING_LEVELS.UNKNOWN
+      default: PATIENTS_ENGLISH_SPEAKING_LEVELS.UNKNOWN,
     },
     height: {},
     healthRisk: {},
@@ -54,15 +58,12 @@ const patientSchema = new mongoose.Schema(
     noOfChildren: {
       type: Number,
     },
-    location: {
-      postcode: {
-        type: String,
-      },
+    address: {
       formattedAddress: {
         type: String,
       },
     },
-    geometry: {
+    locationCoordinates: {
       type: {
         type: String,
         default: "Point",
@@ -79,22 +80,21 @@ const patientSchema = new mongoose.Schema(
       type: String,
     },
     maritalStatus: {
-      type: Number,
+      type: String,
       enum: Object.values(PATIENTS_MARITAL_STATUS),
-      default: PATIENTS_MARITAL_STATUS.UNKNOWN
+      default: PATIENTS_MARITAL_STATUS.UNKNOWN,
     },
     appointments: {},
     logs: {},
     jotformFormId: {
       type: String,
     },
-    patientCreatedAt: {},
     ownsMobilePhone: {
       type: String,
     },
     mobilePhone: {
       type: String,
-    }
+    },
   },
   { timestamps: true }
 );
@@ -108,7 +108,7 @@ const patientSchema = new mongoose.Schema(
 //   return !!this.profileImage;
 // });
 
-patientSchema.methods.getPatient = function () {
+patientSchema.methods.getPatientPublicData = function () {
   const patient = this;
   const patientObj = patient.toObject();
   delete patientObj.password;
