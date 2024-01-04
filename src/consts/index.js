@@ -23,5 +23,6 @@ export const PATIENTS_MARITAL_STATUS = {
 
 export const VOLUNTEER_ROLES = {
   NORMAL: "normal",
+  EXTERNAL: "external",
   ADMIN: "admin",
 };
