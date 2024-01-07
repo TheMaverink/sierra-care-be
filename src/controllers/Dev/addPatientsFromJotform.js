@@ -3,6 +3,11 @@ import axios from "axios";
 
 import Patient from "@models/Patient";
 
+import {
+  PATIENTS_MARITAL_STATUS,
+  PATIENTS_ENGLISH_SPEAKING_LEVELS,
+} from "@consts";
+
 const addPatientsFromJotform = async (req, res, next) => {
   try {
     dotenv.config({ path: ".env" });
@@ -19,9 +24,9 @@ const addPatientsFromJotform = async (req, res, next) => {
 
       const { answers } = submission;
 
-      patient = await Patient.findOne({
-        jotformFormId: patientData.jotformFormId,
-      });
+      // let patient  = await Patient.findOne({
+      //   jotformFormId: patientData.jotformFormId,
+      // });
 
       for (const answer in answers) {
         const currentAnswer = answers[answer];
@@ -49,19 +54,19 @@ const addPatientsFromJotform = async (req, res, next) => {
 
             switch (currentAnswer.answer) {
               case "Single -  Singel":
-                maritalStatus = "Single";
+                maritalStatus = PATIENTS_MARITAL_STATUS.SINGLE;
                 break;
 
               case "Married - Marid":
-                maritalStatus = "Married";
+                maritalStatus = PATIENTS_MARITAL_STATUS.MARRIED;
                 break;
 
               case "Widowed - Winoh":
-                maritalStatus = "Widowed";
+                maritalStatus = PATIENTS_MARITAL_STATUS.WIDOWED;
                 break;
 
               case "Divorced - Divɔs":
-                maritalStatus = "Divorced";
+                maritalStatus = PATIENTS_MARITAL_STATUS.DIVORCED;
                 break;
 
               default:
@@ -85,8 +90,15 @@ const addPatientsFromJotform = async (req, res, next) => {
             break;
 
           case "howWould":
-            patientData.englishSpeakingLevel =
-              Number(currentAnswer?.answer) || 0;
+            if (currentAnswer?.answer) {
+              patientData.englishSpeakingLevel = Object.values(
+                PATIENTS_ENGLISH_SPEAKING_LEVELS
+              )[Number(patientData.englishSpeakingLevel)];
+
+              patientData.englishSpeakingLevel = Object.values(
+                PATIENTS_ENGLISH_SPEAKING_LEVELS
+              )[currentAnswer?.answer];
+            }
             break;
 
           case "doYou15":
@@ -106,7 +118,10 @@ const addPatientsFromJotform = async (req, res, next) => {
               const latitude = parseFloat(latitudeMatch[1]);
               const longitude = parseFloat(longitudeMatch[1]);
 
-              patientData.locationCoordinates.coordinates = [longitude, latitude];
+              patientData.locationCoordinates.coordinates = [
+                longitude,
+                latitude,
+              ];
             }
 
             break;
@@ -126,13 +141,13 @@ const addPatientsFromJotform = async (req, res, next) => {
             break;
 
           case "fileUpload":
-            console.log("image!");
-            console.log(currentAnswer?.answer);
             patientData.patientImages = currentAnswer?.answer;
             break;
 
           case "gender":
-            patientData.gender = currentAnswer?.answer;
+            if (currentAnswer?.answer) {
+              patientData.gender = currentAnswer?.answer.toLowerCase();
+            }
 
             break;
 

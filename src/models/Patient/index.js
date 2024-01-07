@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 // import mongooseLeanGetters from "mongoose-lean-getters";
 import jwt from "jsonwebtoken";
+import moment from "moment"
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 // import { getObjectSignedUrl } from "utils/s3";
@@ -9,6 +10,7 @@ import {
   GENDERS,
   PATIENTS_ENGLISH_SPEAKING_LEVELS,
   PATIENTS_MARITAL_STATUS,
+  PATIENTS_HEALTH_RISKS,
 } from "@consts";
 
 dotenv.config({ path: ".env" });
@@ -35,7 +37,7 @@ const patientSchema = new mongoose.Schema(
       type: Date,
     },
     gender: {
-      type: Number,
+      type: String,
       enum: Object.values(GENDERS),
       default: GENDERS.UNKNOWN,
     },
@@ -45,12 +47,15 @@ const patientSchema = new mongoose.Schema(
       default: PATIENTS_ENGLISH_SPEAKING_LEVELS.UNKNOWN,
     },
     height: {},
-    healthRisk: {},
+    healthRisk: {
+      type: String,
+      enum: Object.values(PATIENTS_HEALTH_RISKS),
+      default: PATIENTS_HEALTH_RISKS.UNKNOWN,
+    },
     bloodType: {},
     pregnant: {
       type: Boolean,
-      required: true,
-      default: false,
+      required: false,
     },
     conceivingDate: {
       type: Date,
@@ -115,6 +120,11 @@ patientSchema.methods.getPatientPublicData = function () {
   delete patientObj.tokens;
   return patientObj;
 };
+
+patientSchema.virtual('age').get(function () {
+  // Calculate the age based on the date of birth
+  return moment().diff(this.dob, 'years');
+});
 
 const Patient = mongoose.model("Patient", patientSchema);
 

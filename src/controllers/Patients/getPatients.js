@@ -4,7 +4,7 @@ const getPatients = async (req, res, next) => {
   try {
     const { page, searchQuery, limit } = req.query;
 
-    const LIMIT = limit || 10;
+    const LIMIT = Number(limit) || 10;
 
     const startIndex = (Number(page) - 1) * LIMIT;
 
@@ -25,11 +25,14 @@ const getPatients = async (req, res, next) => {
     const patients = await Patient.find(patientSearchQueryCriteria)
       .sort({ _id: -1 })
       .limit(LIMIT)
-      .skip(startIndex);
+      .skip(startIndex)
+
+      console.log(patients)
 
     res.json({
       data: patients,
-      currentPage: Number(page) || 1,
+      totalItems: totalPatients,
+      currentPage: Number(page),
       numberOfPages: Math.ceil(totalPatients / LIMIT),
     });
   } catch (error) {

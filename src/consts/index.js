@@ -26,3 +26,10 @@ export const VOLUNTEER_ROLES = {
   EXTERNAL: "external",
   ADMIN: "admin",
 };
+
+export const PATIENTS_HEALTH_RISKS = {
+  UNKNOWN: "unknown",
+  LOW_RISK: "low_risk",
+  MEDIUM_RISK: "medium_risk",
+  HIGH_RISK: "high_risk",
+};
