@@ -32,7 +32,7 @@ const volunteerSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: false,
+      unique: true,
       trim: true,
       lowercase: true,
     },

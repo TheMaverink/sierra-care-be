@@ -28,7 +28,6 @@ const auth = async (req, res, next) => {
     req.token = token;
 
     if (volunteer) {
-      console.log("from auth middleware: volunteer");
       req.volunteer = volunteer;
     }
 

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 // import mongooseLeanGetters from "mongoose-lean-getters";
 import jwt from "jsonwebtoken";
-import moment from "moment"
+import moment from "moment";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 // import { getObjectSignedUrl } from "utils/s3";
@@ -11,6 +11,7 @@ import {
   PATIENTS_ENGLISH_SPEAKING_LEVELS,
   PATIENTS_MARITAL_STATUS,
   PATIENTS_HEALTH_RISKS,
+  BLOOD_TYPES,
 } from "@consts";
 
 dotenv.config({ path: ".env" });
@@ -52,7 +53,11 @@ const patientSchema = new mongoose.Schema(
       enum: Object.values(PATIENTS_HEALTH_RISKS),
       default: PATIENTS_HEALTH_RISKS.UNKNOWN,
     },
-    bloodType: {},
+    bloodType: {
+      type: String,
+      enum: Object.values(BLOOD_TYPES),
+      default: BLOOD_TYPES.UNKNOWN,
+    },
     pregnant: {
       type: Boolean,
       required: false,
@@ -95,10 +100,22 @@ const patientSchema = new mongoose.Schema(
       type: String,
     },
     ownsMobilePhone: {
-      type: String,
+      type: Boolean,
     },
     mobilePhone: {
       type: String,
+    },
+    email: {
+      type: String,
+      required: false,
+      unique: false,
+      trim: true,
+      lowercase: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Volunteer",
+      required: false,
     },
   },
   { timestamps: true }
@@ -116,14 +133,14 @@ const patientSchema = new mongoose.Schema(
 patientSchema.methods.getPatientPublicData = function () {
   const patient = this;
   const patientObj = patient.toObject();
-  delete patientObj.password;
-  delete patientObj.tokens;
+  delete patientObj?.password;
+  delete patientObj?.tokens;
   return patientObj;
 };
 
-patientSchema.virtual('age').get(function () {
+patientSchema.virtual("age").get(function () {
   // Calculate the age based on the date of birth
-  return moment().diff(this.dob, 'years');
+  return moment().diff(this.dob, "years");
 });
 
 const Patient = mongoose.model("Patient", patientSchema);

@@ -45,10 +45,6 @@ const addPatientsFromJotform = async (req, res, next) => {
             patientData.dob = new Date(currentAnswer?.answer?.datetime);
             break;
 
-          case "currentDate":
-            patientData.patientCreatedAt = new Date();
-            break;
-
           case "maritalStatus":
             let maritalStatus;
 

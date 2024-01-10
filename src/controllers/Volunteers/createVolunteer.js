@@ -19,6 +19,7 @@ const createVolunteer = async (req, res, next) => {
 
   try {
     let volunteer = await Volunteer.findOne({ email });
+    
 
     if (volunteer) {
       return res.status(400).json({
@@ -53,6 +54,7 @@ const createVolunteer = async (req, res, next) => {
     res.status(200).send({ ...volunteer.getVolunteerPublicData(), token });
   } catch (error) {
     console.log(error);
+    res.status(500).send("Server error");
   }
 };
 

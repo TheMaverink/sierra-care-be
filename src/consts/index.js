@@ -2,6 +2,7 @@ export const GENDERS = {
   UNKNOWN: "unknown",
   MALE: "male",
   FEMALE: "female",
+  OTHER: "other",
 };
 
 export const PATIENTS_ENGLISH_SPEAKING_LEVELS = {
@@ -32,4 +33,12 @@ export const PATIENTS_HEALTH_RISKS = {
   LOW_RISK: "low_risk",
   MEDIUM_RISK: "medium_risk",
   HIGH_RISK: "high_risk",
+};
+
+export const BLOOD_TYPES = {
+  UNKNOWN: "unknown",
+  A: "A",
+  B: "B",
+  AB: "AB",
+  O: "O",
 };

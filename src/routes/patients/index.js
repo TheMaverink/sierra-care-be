@@ -5,9 +5,10 @@ import patientsControllers from "@controllers/Patients";
 
 const router = Router();
 
-const { getPatients ,getPatientById} = patientsControllers;
+const { getPatients, getPatientById, createPatient } = patientsControllers;
 
-router.get("/", authMiddleware,getPatients);
-router.get("/:id", authMiddleware,getPatientById);
+router.get("/", authMiddleware, getPatients);
+router.get("/:id", authMiddleware, getPatientById);
+router.post("/new", authMiddleware, createPatient);
 
 export default router;
