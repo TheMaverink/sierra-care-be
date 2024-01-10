@@ -2,10 +2,10 @@ import Patient from "@models/Patient";
 
 const getPatientById = async (req, res, next) => {
   try {
-    const patient = await Patient.findById(req.params.id);
+    const patient = await Patient.findById(req.params.id).lean();
 
     if (patient) {
-      res.status(200).json({ ...patient.getPatientPublicData() });
+      res.status(200).json({ ...patient });
     } else {
       return res.status(404).json({ message: "Patient not found" });
     }
