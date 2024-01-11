@@ -1,7 +1,6 @@
 dist
 lib-cov
 *.seed
-*.log
 *.csv
 *.dat
 *.out
@@ -65,3 +64,5 @@ Thumbs.db
 .ebextensions/*
 
 buildartifact.zip
+
+sierra-care.log

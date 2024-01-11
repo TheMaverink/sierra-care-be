@@ -98,7 +98,12 @@ const patientSchema = new mongoose.Schema(
       default: PATIENTS_MARITAL_STATUS.UNKNOWN,
     },
     appointments: {},
-    logs: {},
+    logs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Log",
+      },
+    ],
     jotformFormId: {
       type: String,
     },

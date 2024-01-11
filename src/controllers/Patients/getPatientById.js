@@ -2,7 +2,9 @@ import Patient from "@models/Patient";
 
 const getPatientById = async (req, res, next) => {
   try {
-    const patient = await Patient.findById(req.params.id).lean();
+    const patient = await Patient.findById(req.params.id)
+      .populate("logs")
+      .lean();
 
     if (patient) {
       res.status(200).json({ ...patient });

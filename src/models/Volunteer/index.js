@@ -79,7 +79,12 @@ const volunteerSchema = new mongoose.Schema(
       default: VOLUNTEER_ROLES.NORMAL,
     },
     appointments: {},
-    logs: {},
+    logs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Log",
+      },
+    ],
     isExternal: {
       //maybe replace with diff role level?
       type: Boolean,
@@ -87,6 +92,10 @@ const volunteerSchema = new mongoose.Schema(
     worksAt: {
       // link to other schema?
       type: String,
+    },
+    deleted: {
+      type: Boolean,
+      default: false,
     },
     tokens: [
       {
