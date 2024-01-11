@@ -37,6 +37,9 @@ const patientSchema = new mongoose.Schema(
     dob: {
       type: Date,
     },
+    dateOfDeath: {
+      type: Date,
+    },
     gender: {
       type: String,
       enum: Object.values(GENDERS),
