@@ -48,6 +48,14 @@ const clinicSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    hasCleanWater: {
+      type: Boolean,
+      required: true,
+    },
+    hasSolarEnergy: {
+      type: Boolean,
+      required: true,
+    },
     logs: [
       {
         type: mongoose.Schema.Types.ObjectId,

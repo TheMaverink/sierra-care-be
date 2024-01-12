@@ -14,6 +14,8 @@ const createClinic = async (req, res, next) => {
       approximatedMonthlyNumberPatients,
       isPrivateClinic,
       logs,
+      hasCleanWater,
+      hasSolarEnergy
     } = req.body;
 
     let clinic = await Clinic.findOne({
@@ -44,6 +46,8 @@ const createClinic = async (req, res, next) => {
       approximatedMonthlyNumberPatients,
       isPrivateClinic,
       logs,
+      hasCleanWater,
+      hasSolarEnergy
     });
 
     await clinic.save();
