@@ -60,16 +60,16 @@ const volunteerSchema = new mongoose.Schema(
         type: String,
       },
     },
-    locationCoordinates: {
-      type: {
-        type: String,
-        default: "Point",
-      },
-      coordinates: {
-        type: [Number],
-        index: "2dsphere",
-      },
-    },
+    // locationCoordinates: {
+    //   type: {
+    //     type: String,
+    //     default: "Point",
+    //   },
+    //   coordinates: {
+    //     type: [Number],
+    //     index: "2dsphere",
+    //   },
+    // },
     job: {
       type: String,
     },
