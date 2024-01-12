@@ -8,7 +8,7 @@ const router = Router();
 const { createVolunteer, loginVolunteer, isVolunteerLoggedIn ,getVolunteersOverview} =
   volunteersControllers;
 
-router.post("/create", createVolunteer);
+router.post("/new", createVolunteer);
 router.post("/login", loginVolunteer);
 router.get("/isVolunteerLoggedIn", authMiddleware, isVolunteerLoggedIn);
 router.get("/overview", getVolunteersOverview);
