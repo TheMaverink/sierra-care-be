@@ -2,7 +2,7 @@ import Volunteer from "@models/Volunteer";
 
 const getVolunteers = async (req, res, next) => {
   try {
-    const { page, searchQuery, limit } = req.query;
+    const { page, limit, searchQuery, gender, role } = req.query;
 
     const LIMIT = Number(limit) || 10;
 
@@ -17,6 +17,14 @@ const getVolunteers = async (req, res, next) => {
         { lastName: volunteersSearchQuery },
       ],
     };
+
+    if (gender && gender !== "all") {
+      volunteersSearchQueryCriteria.gender = gender;
+    }
+
+    if (role && role !== "all") {
+      volunteersSearchQueryCriteria.role = role;
+    }
 
     const totalVolunteers = await Volunteer.countDocuments(
       volunteersSearchQueryCriteria

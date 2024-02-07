@@ -2,7 +2,7 @@ import Clinic from "@models/Clinic";
 
 const getClinics = async (req, res, next) => {
   try {
-    const { page, searchQuery, limit } = req.query;
+    const { page, limit, searchQuery } = req.query;
 
     const LIMIT = Number(limit) || 10;
 

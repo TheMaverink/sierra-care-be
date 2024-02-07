@@ -18,15 +18,20 @@ const addPatientsFromJotform = async (req, res, next) => {
 
     const { content: submissionsContent } = submissions.data;
 
+  
+
     submissionsContent.forEach(async (submission) => {
       let patientData = {};
       patientData.jotformFormId = submission.id;
 
       const { answers } = submission;
 
-      // let patient  = await Patient.findOne({
-      //   jotformFormId: patientData.jotformFormId,
-      // });
+      console.log("answers")
+      console.log(answers)
+
+      let existingPatient = await Patient.findOne({
+        jotformFormId: patientData.jotformFormId,
+      });
 
       for (const answer in answers) {
         const currentAnswer = answers[answer];
@@ -36,7 +41,6 @@ const addPatientsFromJotform = async (req, res, next) => {
         switch (answerName) {
           case "name":
             patientData.firstName = currentAnswer?.answer?.first;
-            patientData.middleName = currentAnswer?.answer?.middle; // ??
             patientData.lastName = currentAnswer?.answer?.last;
 
             break;
@@ -152,9 +156,15 @@ const addPatientsFromJotform = async (req, res, next) => {
         }
       }
 
-      const newPatient = new Patient(patientData);
+      if (existingPatient) {
+        for (var k in patientData) existingPatient[k] = patientData[k];
 
-      await newPatient.save();
+        await existingPatient.save();
+      } else {
+        const newPatient = new Patient(patientData);
+
+        await newPatient.save();
+      }
     });
 
     res.json(submissionsContent);

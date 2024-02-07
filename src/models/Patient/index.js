@@ -71,11 +71,6 @@ const patientSchema = new mongoose.Schema(
     noOfChildren: {
       type: Number,
     },
-    address: {
-      formattedAddress: {
-        type: String,
-      },
-    },
     locationCoordinates: {
       type: {
         type: String,
@@ -85,6 +80,22 @@ const patientSchema = new mongoose.Schema(
         type: [Number],
         index: "2dsphere",
       },
+    },
+    locationCoordinatesFormatted: {
+      type: String,
+    },
+    addressLocationCoordinates: {
+      type: {
+        type: String,
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number],
+        index: "2dsphere",
+      },
+    },
+    addressLocationCoordinatesFormatted: {
+      type: String,
     },
     income: {
       type: String,

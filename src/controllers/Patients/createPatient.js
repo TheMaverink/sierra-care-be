@@ -2,7 +2,7 @@ import Patient from "@models/Patient";
 import {
   PATIENTS_HEALTH_RISKS,
   PATIENTS_ENGLISH_SPEAKING_LEVELS,
-  BLOOD_TYPES
+  BLOOD_TYPES,
 } from "consts";
 
 const createPatient = async (req, res, next) => {
@@ -21,8 +21,11 @@ const createPatient = async (req, res, next) => {
       ownsMobilePhone,
       mobilePhone,
       locationCoordinates,
-      address,
-      pregnant,
+      locationCoordinatesFormatted,
+      addressLocationCoordinates,
+      addressLocationCoordinatesFormatted,
+      doesLiveAtFetchedLocation,
+      isPregnant,
       conceivingDate,
       email,
       patientImages,
@@ -30,28 +33,12 @@ const createPatient = async (req, res, next) => {
       healthRisk,
     } = req.body;
 
-    console.log(
-      firstName,
-      middleName,
-      lastName,
-      dob,
-      gender,
-      maritalStatus,
-      noOfChildren,
-      job,
-      income,
-      englishSpeakingLevel,
-      ownsMobilePhone,
-      mobilePhone,
-      locationCoordinates,
-      address,
-      pregnant,
-      conceivingDate,
-      email,
-      patientImages,
-      bloodType,
-      healthRisk
-    );
+    console.log("req.body");
+    console.log(req.body);
+
+    console.log("locationCoordinates");
+    console.log(locationCoordinates);
+    console.log(addressLocationCoordinates);
 
     let patient = await Patient.findOne({
       email,
@@ -77,7 +64,7 @@ const createPatient = async (req, res, next) => {
       dob,
       gender: gender?.toLowerCase(),
       maritalStatus: maritalStatus && maritalStatus.toLowerCase(),
-      noOfChildren,
+      noOfChildren: noOfChildren && parseInt(noOfChildren, 10),
       job,
       income,
       englishSpeakingLevel: englishSpeakingLevel
@@ -85,17 +72,37 @@ const createPatient = async (req, res, next) => {
         : PATIENTS_ENGLISH_SPEAKING_LEVELS.UNKNOWN,
       ownsMobilePhone,
       mobilePhone,
-      locationCoordinates,
-      address,
-      pregnant,
+      //
+      locationCoordinates: {
+        type: "Point",
+        coordinates: [locationCoordinates.lng, locationCoordinates.lat],
+      },
+      locationCoordinatesFormatted,
+      addressLocationCoordinates: doesLiveAtFetchedLocation
+        ? {
+            type: "Point",
+            coordinates: [locationCoordinates.lng, locationCoordinates.lat],
+          }
+        : {
+            type: "Point",
+            coordinates: [
+              addressLocationCoordinates.lng,
+              addressLocationCoordinates.lat,
+            ],
+          },
+      addressLocationCoordinatesFormatted: doesLiveAtFetchedLocation
+        ? locationCoordinatesFormatted
+        : addressLocationCoordinatesFormatted,
+      isPregnant,
       conceivingDate,
       email,
       patientImages,
-      bloodType: bloodType ||  BLOOD_TYPES.UNKNOWN ,
+      bloodType: bloodType || BLOOD_TYPES.UNKNOWN,
       healthRisk: healthRisk
         ? Object.values(PATIENTS_HEALTH_RISKS)[healthRisk]
         : PATIENTS_HEALTH_RISKS.UNKNOWN,
       createdBy: req.volunteer.id,
+      //
     });
 
     await patient.save();
